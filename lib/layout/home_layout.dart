@@ -31,10 +31,11 @@ class _HomeLayoutState extends State<HomeLayout> {
   ];
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool isBottomSheetShown = false;
+  int currentIndex= 0;
   var titleController = TextEditingController();
   var dateController = TextEditingController();
   var timeController = TextEditingController();
-  int currentIndex= 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _HomeLayoutState extends State<HomeLayout> {
         title: Text(titles[currentIndex],
             style: TextStyle(color: Colors.white,),
       )),
-      floatingActionButton: FloatingActionButton (
+      floatingActionButton: currentIndex == 0 ? FloatingActionButton(
         onPressed:() {
           if(isBottomSheetShown){
             Navigator.pop(context);
@@ -158,7 +159,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           Icons.add,
           color: Colors.white,
         ),
-      ),
+      ):null,
       body: screens [currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.teal[900],
