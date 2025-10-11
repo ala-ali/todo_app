@@ -15,3 +15,12 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Screenshots 
+
+New Task
+
+![6003479190583757907](https://github.com/user-attachments/assets/50475fd7-a639-4380-b79f-5e9a83364731)
+
+Done Task 
+
+![6003479190583757906(1)](https://github.com/user-attachments/assets/922311ae-b809-4152-9754-7022e311a312)
