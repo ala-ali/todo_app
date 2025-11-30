@@ -148,8 +148,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   firstDate: DateTime.now(),
                                     lastDate:DateTime.parse('3000-12-31'),
                                 ).then((value) {
-                                  dateController.text = value!.toString();
-
+                                  dateController.text = value!.toString().substring(0,10);
                                 });
                                 },
                             ), //date
@@ -235,3 +234,5 @@ class _HomeLayoutState extends State<HomeLayout> {
     });
   }
 }
+
+
