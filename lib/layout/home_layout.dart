@@ -147,7 +147,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                                     initialDate: DateTime.now(),
                                   firstDate: DateTime.now(),
                                     lastDate:DateTime.parse('3000-12-31'),
-                                );
+                                ).then((value) {
+                                  dateController.text = value!.toString();
+
+                                });
                                 },
                             ), //date
                             SizedBox(height: 10),
