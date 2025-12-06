@@ -35,6 +35,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   var dateController = TextEditingController();
   var timeController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  IconData fabIcon = Icons.mode_edit_outline_outlined;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,17 +52,23 @@ class _HomeLayoutState extends State<HomeLayout> {
               onPressed: () {
                 if (isBottomSheetShown) {
                   if (
-                  formKey.currentState!.validate()
-                  ){
-                    Navigator.pop(context);
+                   formKey.currentState!.validate()){
+                    insertToDatabase(title: titleController.text,
+                        time: timeController.text,
+                        date: dateController.text,
+                    );
+                    Navigator.pop(
+                        context);
                     isBottomSheetShown = false;
+
                   }
 
 
                 } else {
                   scaffoldKey.currentState!.showBottomSheet(
                     (context) => Container(
-                      padding: EdgeInsets.only(top: 40),
+                      padding: EdgeInsets.only(
+                          top: 40),
                       child: Form(
                         key: formKey,
                         child: Column(
@@ -115,7 +122,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   initialTime: TimeOfDay.now(),
                                 ).then((value) {
                                   timeController.text = value!.format(context).toString();
-                        
+
                                 });
                               },
                             ), //time
@@ -154,17 +161,23 @@ class _HomeLayoutState extends State<HomeLayout> {
                             ), //date
                             SizedBox(height: 10),
                           ],
+
                         ),
                       ),
                     ),
                   );
+                  setState(() {
+                    fabIcon = Icons.add;
+                  });
                   isBottomSheetShown = true;
                 }
               },
               backgroundColor: Colors.teal[900],
               child: Icon
                 (
-                  Icons.add, color: Colors.white
+                  fabIcon,
+                  color: Colors.white,
+                size: 25,
               ),
             ): null,
       body: screens[currentIndex],
@@ -180,7 +193,8 @@ class _HomeLayoutState extends State<HomeLayout> {
           });
         },
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'New Tasks'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.menu), label: 'New Tasks'),
           BottomNavigationBarItem(
             icon: Icon(Icons.done_outline),
             label: 'Done Tasks',
@@ -218,12 +232,16 @@ class _HomeLayoutState extends State<HomeLayout> {
     );
   }
 
-  Future<void> insertToDatabase() async {
+  Future<void> insertToDatabase({
+    required String title,
+    required String time,
+    required String date,
+}) async {
     return database!.transaction((txn) async
     {
       txn
           .rawInsert(
-            'INSERT INTO tasks (title , date , time , status) VALUES ("first task" , "18/9/2025" , "12:34PM" , "new")',
+            'INSERT INTO tasks (title , date , time , status) VALUES ("${title}" , "${date}" , "${time}" , "new")',
           )
           .then((value) {
             print('$value inserted successfully');
@@ -233,6 +251,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           });
     });
   }
+
 }
 
 
