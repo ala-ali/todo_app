@@ -24,16 +24,16 @@ class _HomeLayoutState extends State<HomeLayout> {
     ArchivedTaskScreen(),
   ];
   List<String> titles = [
-    'New Tasks Screen',
-    'Done Tasks Screen',
-    'Archived Tasks Screen',
+    'New Tasks',
+    'Done Tasks ',
+    'Archived Tasks',
   ];
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool isBottomSheetShown = false;
   int currentIndex = 0;
-  var titleController = TextEditingController();
-  var dateController = TextEditingController();
-  var timeController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   IconData fabIcon = Icons.mode_edit_outline_outlined;
   @override
@@ -45,7 +45,10 @@ class _HomeLayoutState extends State<HomeLayout> {
         backgroundColor: Colors.teal[900],
         title: Text(
           titles[currentIndex],
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+              color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       floatingActionButton: currentIndex == 0 ? FloatingActionButton(
@@ -53,20 +56,25 @@ class _HomeLayoutState extends State<HomeLayout> {
                 if (isBottomSheetShown) {
                   if (
                    formKey.currentState!.validate()){
-                    insertToDatabase(title: titleController.text,
+                    insertToDatabase(
+                      title: titleController.text,
                         time: timeController.text,
                         date: dateController.text,
                     );
                     Navigator.pop(
                         context);
+
                     isBottomSheetShown = false;
+                    setState(() {
+                      fabIcon = Icons.mode_edit_outline_outlined;
+                    });
 
                   }
 
 
                 } else {
-                  scaffoldKey.currentState!.showBottomSheet(
-                    (context) => Container(
+                  scaffoldKey.currentState!.showBottomSheet (
+                  (context) => Container(
                       padding: EdgeInsets.only(
                           top: 40),
                       child: Form(
@@ -165,7 +173,12 @@ class _HomeLayoutState extends State<HomeLayout> {
                         ),
                       ),
                     ),
-                  );
+                  ).closed.then((value){
+                    isBottomSheetShown = false;
+                    setState(() {
+                      fabIcon = Icons.mode_edit_outline_outlined;
+                    });
+                  });
                   setState(() {
                     fabIcon = Icons.add;
                   });
@@ -227,17 +240,19 @@ class _HomeLayoutState extends State<HomeLayout> {
             });
       },
       onOpen: (database) {
+        getDataFromDB(database);
         print('database opened');
       },
     );
   }
 
-  Future<void> insertToDatabase({
+  Future insertToDatabase({
     required String title,
     required String time,
     required String date,
-}) async {
-    return database!.transaction((txn) async
+}) async
+  {
+    await database?.transaction((txn) async
     {
       txn
           .rawInsert(
@@ -252,6 +267,10 @@ class _HomeLayoutState extends State<HomeLayout> {
     });
   }
 
+  void getDataFromDB(database) async{
+    List<Map> tasks = await database.rawQuery('SELECT * FROM tasks');
+    print(tasks);
+  }
 }
 
 
