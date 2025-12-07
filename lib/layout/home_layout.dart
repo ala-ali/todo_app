@@ -19,15 +19,11 @@ class _HomeLayoutState extends State<HomeLayout> {
   }
 
   List<Widget> screens = [
-    NewTaskScreen(),
+    NewTaskScreen(tasks: tasks,),
     DoneTaskScreen(),
     ArchivedTaskScreen(),
   ];
-  List<String> titles = [
-    'New Tasks',
-    'Done Tasks ',
-    'Archived Tasks',
-  ];
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool isBottomSheetShown = false;
   int currentIndex = 0;
@@ -38,6 +34,11 @@ class _HomeLayoutState extends State<HomeLayout> {
   IconData fabIcon = Icons.mode_edit_outline_outlined;
   @override
   Widget build(BuildContext context) {
+    List<String> titles = [
+      'New Tasks',
+      'Done Tasks ',
+      'Archived Tasks',
+    ];
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.teal[50],
@@ -220,8 +221,10 @@ class _HomeLayoutState extends State<HomeLayout> {
       ),
     );
   }
+  late Database database;
 
-  Database? database;
+List<Map> tasks = [];
+
   void createDatabase() async {
     database = await openDatabase(
       'todoApp.db',
@@ -240,7 +243,10 @@ class _HomeLayoutState extends State<HomeLayout> {
             });
       },
       onOpen: (database) {
-        getDataFromDB(database);
+        getDataFromDB(database).then((value){
+          tasks = value;
+          print(tasks[0]['title']);
+        });
         print('database opened');
       },
     );
@@ -252,7 +258,7 @@ class _HomeLayoutState extends State<HomeLayout> {
     required String date,
 }) async
   {
-    await database?.transaction((txn) async
+    await database.transaction((txn) async
     {
       txn
           .rawInsert(
@@ -267,9 +273,9 @@ class _HomeLayoutState extends State<HomeLayout> {
     });
   }
 
-  void getDataFromDB(database) async{
-    List<Map> tasks = await database.rawQuery('SELECT * FROM tasks');
-    print(tasks);
+  Future<List<Map>> getDataFromDB(database) async{
+    return await database.rawQuery('SELECT * FROM tasks');
+
   }
 }
 
