@@ -3,32 +3,32 @@ import 'package:flutter/material.dart';
 
 class NewTaskScreen extends StatelessWidget{
   final List<Map>  tasks;
-  NewTaskScreen({required this.tasks}
+  NewTaskScreen(
+      {required this.tasks}
       );
-
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        itemBuilder: (context , index)=> TaskItem(),
-        separatorBuilder: (context , index)=> Separator(),
-        itemCount: 20,
-    );
+  return ListView.separated(
+      itemBuilder: (context , index)=> taskItem(),
+      separatorBuilder: (context , index)=> Separator(),
+      itemCount: 5,
+  );
 
   }
 }
-
-Widget TaskItem ()=> Padding(
+Widget taskItem()=> Padding(
   padding: const EdgeInsets.all(20),
   child: Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
       CircleAvatar(
-        radius: 42,
-        backgroundColor: Colors.teal[800],
+        radius: 43,
+        backgroundColor: Colors.teal[700],
         child: Text(
-          '06:00 PM',
+          '06:00pm',
           style: TextStyle(
             color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -39,30 +39,28 @@ Widget TaskItem ()=> Padding(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Task title',
+            'Task Title',
             style: TextStyle(
-              fontSize: 18,
-              color: Colors.black,
               fontWeight: FontWeight.bold,
+              fontSize: 18,
             ),
           ),
           Text(
-            '22 April, 2025',
+            '24 December 2025',
             style: TextStyle(
               color: Colors.grey,
               fontSize: 12,
               fontWeight: FontWeight.bold,
-
             ),
           ),
         ],
-      ),
+      )
     ],
   ),
 );
-Widget Separator ()=> Padding(
+Widget Separator()=> Padding(
   padding: const EdgeInsets.symmetric(
-      horizontal: 25
+      horizontal: 20
   ),
   child: Container(
     width: double.infinity,

@@ -17,9 +17,8 @@ class _HomeLayoutState extends State<HomeLayout> {
     super.initState();
     createDatabase();
   }
-
   List<Widget> screens = [
-    NewTaskScreen(tasks: tasks,),
+    NewTaskScreen(tasks: [],),
     DoneTaskScreen(),
     ArchivedTaskScreen(),
   ];
@@ -71,8 +70,6 @@ class _HomeLayoutState extends State<HomeLayout> {
                     });
 
                   }
-
-
                 } else {
                   scaffoldKey.currentState!.showBottomSheet (
                   (context) => Container(
@@ -162,7 +159,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   context: context,
                                     initialDate: DateTime.now(),
                                   firstDate: DateTime.now(),
-                                    lastDate:DateTime.parse('3000-12-31'),
+                                    lastDate:DateTime.parse('90000000-12-31'),
                                 ).then((value) {
                                   dateController.text = value!.toString().substring(0,10);
                                 });
@@ -223,7 +220,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   }
   late Database database;
 
-List<Map> tasks = [];
+List<Map>tasks = [];
 
   void createDatabase() async {
     database = await openDatabase(
@@ -244,8 +241,7 @@ List<Map> tasks = [];
       },
       onOpen: (database) {
         getDataFromDB(database).then((value){
-          tasks = value;
-          print(tasks[0]['title']);
+          tasks=value;
         });
         print('database opened');
       },
@@ -274,8 +270,8 @@ List<Map> tasks = [];
   }
 
   Future<List<Map>> getDataFromDB(database) async{
-    return await database.rawQuery('SELECT * FROM tasks');
-
+    return await database.rawQuery('SELECT * FROM tasks ');
+     
   }
 }
 
