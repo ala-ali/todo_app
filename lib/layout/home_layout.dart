@@ -159,7 +159,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   context: context,
                                     initialDate: DateTime.now(),
                                   firstDate: DateTime.now(),
-                                    lastDate:DateTime.parse('90000000-12-31'),
+                                    lastDate:DateTime.parse('2031-12-31'),
                                 ).then((value) {
                                   dateController.text = value!.toString().substring(0,10);
                                 });
@@ -191,7 +191,11 @@ class _HomeLayoutState extends State<HomeLayout> {
                 size: 25,
               ),
             ): null,
-      body: screens[currentIndex],
+      body: [
+        NewTaskScreen(tasks: tasks), // Now it always gets the updated 'tasks'
+        DoneTaskScreen(),
+        ArchivedTaskScreen(),
+      ][currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.teal[900],
         type: BottomNavigationBarType.fixed,
@@ -241,7 +245,10 @@ List<Map>tasks = [];
       },
       onOpen: (database) {
         getDataFromDB(database).then((value){
-          tasks=value;
+          setState(() {
+            tasks = value; // Update the list
+          });
+          //tasks=value;
         });
         print('database opened');
       },
@@ -271,7 +278,7 @@ List<Map>tasks = [];
 
   Future<List<Map>> getDataFromDB(database) async{
     return await database.rawQuery('SELECT * FROM tasks ');
-     
+
   }
 }
 

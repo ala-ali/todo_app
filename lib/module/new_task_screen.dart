@@ -8,15 +8,17 @@ class NewTaskScreen extends StatelessWidget{
       );
   @override
   Widget build(BuildContext context) {
-  return ListView.separated(
-      itemBuilder: (context , index)=> taskItem(),
+    print('[new-tasks]: ${tasks.length}');
+
+    return ListView.separated(
+      itemBuilder: (context ,  index)=> taskItem(tasks[index]),
       separatorBuilder: (context , index)=> Separator(),
-      itemCount: 5,
+      itemCount: tasks.length,
   );
 
   }
 }
-Widget taskItem()=> Padding(
+Widget taskItem(Map task)=> Padding(
   padding: const EdgeInsets.all(20),
   child: Row(
     mainAxisAlignment: MainAxisAlignment.start,
@@ -25,7 +27,7 @@ Widget taskItem()=> Padding(
         radius: 43,
         backgroundColor: Colors.teal[700],
         child: Text(
-          '06:00pm',
+          task['time'],
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -39,14 +41,14 @@ Widget taskItem()=> Padding(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Task Title',
+            task['title'],
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
           ),
           Text(
-            '24 December 2025',
+            task['date'],
             style: TextStyle(
               color: Colors.grey,
               fontSize: 12,
