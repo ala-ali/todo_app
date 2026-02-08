@@ -1,8 +1,11 @@
-abstract class TodoStates{}
-class TodoInitialState extends TodoStates{}
+abstract class TodoStates {}
 
-class TodoChangeIndexOfNavBar extends TodoStates{}
+class TodoInitialState extends TodoStates {}
 
-class TodoChangeIconToEditState extends TodoStates{}
+class TodoChangeIndexOfNavBar extends TodoStates {}
 
-class TodoChangeIconToAddState extends TodoStates{}
+class TodoChangeIconToEditState extends TodoStates {}
+
+class TodoChangeIconToAddState extends TodoStates {}
+
+class TodoLoadTasksState extends TodoStates {}
