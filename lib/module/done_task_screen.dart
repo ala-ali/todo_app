@@ -23,7 +23,7 @@ class DoneTaskScreen extends StatelessWidget{
     return BlocConsumer<TodoCubit , TodoStates>(
       listener: (context , state){},
       builder: (context , state){
-
+        List tasks = TodoCubit.get(context).doneTask;
         return ListView.separated(
           itemBuilder: (context, index) => taskItem(tasks[index] , context),
           separatorBuilder: (context, index) => Separator(),
