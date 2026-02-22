@@ -11,15 +11,14 @@ class DoneTaskScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    print('[new-tasks]: ${tasks.length}');
-    if (tasks.isEmpty) {
-      return Center(
-        child: Text(
-          'No tasks yet. Add one to get started!',
-          style: TextStyle(fontSize: 18, color: Colors.grey[900]),
-        ),
-      );
-    }
+    // if (tasks.isEmpty) {
+    //   return Center(
+    //     child: Text(
+    //       'No tasks yet. Add one to get started!',
+    //       style: TextStyle(fontSize: 18, color: Colors.grey[900]),
+    //     ),
+    //   );
+    // }
     return BlocConsumer<TodoCubit , TodoStates>(
       listener: (context , state){},
       builder: (context , state){
