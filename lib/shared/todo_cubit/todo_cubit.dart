@@ -15,11 +15,7 @@ class TodoCubit extends Cubit<TodoStates> {
     DoneTaskScreen(),
     ArchivedTaskScreen(),
   ];
-  List<String> titles = [
-    'New Tasks',
-    'Done Tasks ',
-    'Archived Tasks'
-  ];
+  List<String> titles = ['New Tasks', 'Done Tasks ', 'Archived Tasks'];
 
   void changeIndex(index) {
     currentIndex = index;
@@ -61,13 +57,12 @@ class TodoCubit extends Cubit<TodoStates> {
       },
       onOpen: (database) {
         getDataFromDB(database);
-      }
+      },
     );
     print('database initialized, now loading tasks...');
     await getTasks();
     print('tasks loaded: ${tasks.length} tasks');
   }
-
 
   Future<void> getTasks() async {
     try {
@@ -103,32 +98,28 @@ class TodoCubit extends Cubit<TodoStates> {
     }
   }
 
-  List newTask = [];
-  List doneTask = [];
-  List archivedTask = [];
+  List<Map> newTask = [];
+  List<Map> doneTask = [];
+  List<Map> archivedTask = [];
 
   Future<List<Map>> getDataFromDB(database) async {
     newTask = [];
-    return await database.rawQuery('SELECT * FROM tasks').then((value){
-      value.forEach((element){
-        print(element);
-        if (element['status']=='new'){
-          newTask.addAll(element);
-        }
-      });
+    final value = await database.rawQuery('SELECT * FROM tasks');
+    value.forEach((element) {
+      print(element);
+      if (element['status'] == 'new') {
+        newTask.add(element);
+      }
     });
+    return newTask;
   }
 
-  void updateDB({
-    required String status,
-    required int id,
-}){
-    database.rawUpdate(
-        'UPDATE tasks SET status ? WHERE id = ?',
-      ['${status}' , id]
-    ).then((value){getDataFromDB(database);
-    emit(TodoLoadTasksState());
-    }
-    );
+  void updateDB({required String status, required int id}) {
+    database
+        .rawUpdate('UPDATE tasks SET status ? WHERE id = ?', ['${status}', id])
+        .then((value) {
+          getDataFromDB(database);
+          emit(TodoLoadTasksState());
+        });
   }
 }

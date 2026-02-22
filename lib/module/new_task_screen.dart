@@ -11,26 +11,24 @@ class NewTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('[new-tasks]: ${tasks.length}');
-    if (tasks.isEmpty) {
-      return Center(
-        child: Text(
-          'No tasks yet. Add one to get started!',
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-        ),
-      );
-    }
-    return BlocConsumer<TodoCubit , TodoStates>(
-        listener: (context , state){},
-        builder: (context , state){
-          List tasks = TodoCubit.get(context).newTask;
-          return ListView.separated(
-            itemBuilder: (context, index) => taskItem(tasks[index] , context),
-            separatorBuilder: (context, index) => Separator(),
-            itemCount: tasks.length,
+    return BlocConsumer<TodoCubit, TodoStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        List newTasks = TodoCubit.get(context).newTask;
+        if (newTasks.isEmpty) {
+          return Center(
+            child: Text(
+              'No tasks yet. Add one to get started!',
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
           );
-        },
+        }
+        return ListView.separated(
+          itemBuilder: (context, index) => taskItem(newTasks[index], context),
+          separatorBuilder: (context, index) => Separator(),
+          itemCount: newTasks.length,
+        );
+      },
     );
   }
 }
-
