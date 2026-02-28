@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 
-class ArchivedTaskScreen extends StatelessWidget{
+class ArchivedTaskScreen extends StatelessWidget {
   const ArchivedTaskScreen({super.key});
 
   @override
@@ -11,10 +10,9 @@ class ArchivedTaskScreen extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.archive_outlined),
-          Text('Archived Tasks Screen',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+          Text(
+            'Archived Tasks Screen',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ],
       ),

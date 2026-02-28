@@ -102,6 +102,8 @@ class TodoCubit extends Cubit<TodoStates> {
 
   Future<List<Map>> getDataFromDB(database) async {
     newTask = [];
+    doneTask = [];
+    archivedTask = [];
     final value = await database.rawQuery('SELECT * FROM tasks');
     value.forEach((element) {
       print(element);
@@ -113,17 +115,19 @@ class TodoCubit extends Cubit<TodoStates> {
         archivedTask.add(element);
       }
     });
+    return newTask;
   }
 
-  void updateDB({required String status, required int id}) {
-    database
-        .rawUpdate('UPDATE tasks SET status = ? WHERE id = ?', [
-          '${status}',
-          id,
-        ])
-        .then((value) {
-          getDataFromDB(database);
-          emit(TodoLoadTasksState());
-        });
+  Future<void> updateDB({required String status, required int id}) async {
+    try {
+      await database.rawUpdate('UPDATE tasks SET status = ? WHERE id = ?', [
+        '${status}',
+        id,
+      ]);
+      await getDataFromDB(database);
+      emit(TodoLoadTasksState());
+    } catch (error) {
+      print('Error updating task: $error');
+    }
   }
 }
