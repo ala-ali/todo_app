@@ -19,7 +19,7 @@ class NewTaskScreen extends StatelessWidget {
           return Center(
             child: Text(
               'No tasks yet. Add one to get started!',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+              style: TextStyle(fontSize: 18, color: Colors.grey[800]),
             ),
           );
         }
