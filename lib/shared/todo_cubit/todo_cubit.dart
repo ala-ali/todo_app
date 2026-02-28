@@ -107,14 +107,20 @@ class TodoCubit extends Cubit<TodoStates> {
       print(element);
       if (element['status'] == 'new') {
         newTask.add(element);
+      } else if (element['status'] == 'done') {
+        doneTask.add(element);
+      } else {
+        archivedTask.add(element);
       }
     });
-    return newTask;
   }
 
   void updateDB({required String status, required int id}) {
     database
-        .rawUpdate('UPDATE tasks SET status ? WHERE id = ?', ['${status}', id])
+        .rawUpdate('UPDATE tasks SET status = ? WHERE id = ?', [
+          '${status}',
+          id,
+        ])
         .then((value) {
           getDataFromDB(database);
           emit(TodoLoadTasksState());
