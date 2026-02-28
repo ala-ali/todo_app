@@ -55,9 +55,7 @@ class TodoCubit extends Cubit<TodoStates> {
               print('error when creating table ${error.toString()} ');
             });
       },
-      onOpen: (database) {
-        getDataFromDB(database);
-      },
+      onOpen: (database) {},
     );
     print('database initialized, now loading tasks...');
     await getTasks();
