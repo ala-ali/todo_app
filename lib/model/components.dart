@@ -50,6 +50,14 @@ Widget taskItem(Map task , context) =>
               Icons.archive_outlined,
             color: Colors.blueGrey[800],
           )),
+      IconButton(
+          onPressed: (){
+            TodoCubit.get(context).deleteData(model['id']);
+          },
+          icon: Icon(
+              Icons.delete_outline_outlined,
+            color: Colors.red,
+          )),
     ],
   ),
 );

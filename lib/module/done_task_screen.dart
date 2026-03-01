@@ -34,11 +34,12 @@ class DoneTaskScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.done_all_sharp),
+                Icon(Icons.done_all_sharp,
+                    color:Colors.grey[600]),
                 Text(
                   "No done tasks yet, get done of some!",
                 style: TextStyle(
-                    color:Colors.grey[800],),
+                    color:Colors.grey[600],),
                 ),
               ],
             ),

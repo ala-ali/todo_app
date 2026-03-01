@@ -21,10 +21,10 @@ class NewTaskScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.add_box , color: Colors.grey[800]),
+                  Icon(Icons.add_box , color: Colors.grey[600]),
                   Text(
                     'No tasks yet. Add one to get started!',
-                    style: TextStyle(fontSize: 18, color: Colors.grey[800]),
+                    style: TextStyle(fontSize: 18, color: Colors.grey[600]),
                   ),
                 ],
               ),

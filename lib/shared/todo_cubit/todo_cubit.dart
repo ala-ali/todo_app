@@ -117,7 +117,6 @@ class TodoCubit extends Cubit<TodoStates> {
     });
     return newTask;
   }
-
   Future<void> updateDB({required String status, required int id}) async {
     try {
       await database.rawUpdate('UPDATE tasks SET status = ? WHERE id = ?', [
@@ -129,5 +128,14 @@ class TodoCubit extends Cubit<TodoStates> {
     } catch (error) {
       print('Error updating task: $error');
     }
+  }
+
+  void deleteData(id){
+    database.rawDelete(
+        'DELETE FROM tasks WHERE id = ?'[id],
+    ).then((value){
+      getDataFromDB(database);
+      emit(AppDeleteDataState());
+    });
   }
 }

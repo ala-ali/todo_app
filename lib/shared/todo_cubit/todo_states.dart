@@ -9,6 +9,7 @@ class TodoChangeIconToEditState extends TodoStates {}
 class TodoChangeIconToAddState extends TodoStates {}
 
 class TodoLoadTasksState extends TodoStates {}
+class AppDeleteDataState extends TodoStates {}
 
 class TodoInsertErrorState extends TodoStates {
   final error ;
