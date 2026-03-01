@@ -17,9 +17,17 @@ class NewTaskScreen extends StatelessWidget {
         List newTasks = TodoCubit.get(context).newTask;
         if (newTasks.isEmpty) {
           return Center(
-            child: Text(
-              'No tasks yet. Add one to get started!',
-              style: TextStyle(fontSize: 18, color: Colors.grey[800]),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.add_box , color: Colors.grey[800]),
+                  Text(
+                    'No tasks yet. Add one to get started!',
+                    style: TextStyle(fontSize: 18, color: Colors.grey[800]),
+                  ),
+                ],
+              ),
             ),
           );
         }

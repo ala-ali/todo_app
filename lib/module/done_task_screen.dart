@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,10 +23,26 @@ class DoneTaskScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         List tasks = TodoCubit.get(context).doneTask;
-        return ListView.separated(
-          itemBuilder: (context, index) => taskItem(tasks[index], context),
-          separatorBuilder: (context, index) => Separator(),
-          itemCount: tasks.length,
+        return ConditionalBuilder(
+          condition: tasks.length > 0,
+          builder:(context)=> ListView.separated(
+            itemBuilder: (context, index) => taskItem(tasks[index], context),
+            separatorBuilder: (context, index) => Separator(),
+            itemCount: tasks.length,
+          ),
+          fallback:(context)=> Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.done_all_sharp),
+                Text(
+                  "No done tasks yet, get done of some!",
+                style: TextStyle(
+                    color:Colors.grey[800],),
+                ),
+              ],
+            ),
+          ) ,
         );
       },
     );
