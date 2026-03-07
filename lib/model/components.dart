@@ -52,7 +52,7 @@ Widget taskItem(Map task , context) =>
           )),
       IconButton(
           onPressed: (){
-            TodoCubit.get(context).deleteData(model['id']);
+            TodoCubit.get(context).deleteData(task['id']);
           },
           icon: Icon(
               Icons.delete_outline_outlined,

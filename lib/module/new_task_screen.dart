@@ -11,8 +11,7 @@ class NewTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TodoCubit, TodoStates>(
-      listener: (context, state) {},
+    return BlocBuilder<TodoCubit, TodoStates>(
       builder: (context, state) {
         List newTasks = TodoCubit.get(context).newTask;
         if (newTasks.isEmpty) {

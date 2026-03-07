@@ -130,12 +130,13 @@ class TodoCubit extends Cubit<TodoStates> {
     }
   }
 
-  void deleteData(id){
+void deleteData(id){
     database.rawDelete(
-        'DELETE FROM tasks WHERE id = ?'[id],
-    ).then((value){
-      getDataFromDB(database);
+        'DELETE FROM tasks WHERE id = ?',
+      [id]
+    ).then((value) async {
+     await getDataFromDB(database);
       emit(AppDeleteDataState());
     });
-  }
+}
 }
