@@ -34,6 +34,7 @@ Widget taskItem(Map task , context) =>
           ),
         ],
       ),
+      Spacer(),
       IconButton(
           onPressed: (){
             TodoCubit.get(context).updateDB(status: 'done', id: task['id']);

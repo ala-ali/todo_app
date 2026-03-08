@@ -1,7 +1,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../model/components.dart';
 import '../shared/todo_cubit/todo_cubit.dart';
 import '../shared/todo_cubit/todo_states.dart';
