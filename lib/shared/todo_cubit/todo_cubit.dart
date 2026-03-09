@@ -138,4 +138,33 @@ class TodoCubit extends Cubit<TodoStates> {
       emit(AppDeleteDataState());
     });
 }
+  Future<bool?> showOkCancelDialog({
+    required BuildContext context,
+    required String title,
+    required String message,
+    String okLabel = 'OK',
+    String cancelLabel = 'Cancel',
+  }) async {
+      return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false), // Cancel
+              child: Text(cancelLabel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true), // OK
+              child: Text(okLabel),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
+
+
