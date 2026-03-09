@@ -19,14 +19,14 @@ Future<bool?> showOkCancelDialog({
             onPressed: () => Navigator.of(context).pop(false), // Cancel
             child: Text(cancelLabel,
             style: TextStyle(
-              color: CupertinoColors.systemBlue,
+              color: Colors.teal,
             )),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true), // OK
             child: Text(okLabel,
                 style: TextStyle(
-                  color: CupertinoColors.destructiveRed,
+                  color: Colors.red,
                 )),
           ),
         ],
@@ -90,17 +90,15 @@ Widget taskItem(Map task , context) =>
               title: 'Confirm delete',
               message: 'Are you sure you want to proceed?',
             );
-
             if (confirmed == true) {
               // User clicked OK - perform action
               print('Action confirmed');
+              TodoCubit.get(context).deleteData(task['id']);
             } else {
               // User clicked Cancel or dismissed
               print('Action cancelled');
             }
           },
-
-
           icon: Icon(
               Icons.delete_outline_outlined,
             color: Colors.red,

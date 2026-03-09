@@ -29,7 +29,7 @@ Our future updates:
 - Add a Search Bar.
 - Time and Date inputs shouldn't be in past.
 - A notification should appear when task time comes.
-- A pop-up saying "Are you sure want to delete this task?" will show when pressing the delete button.
+- A pop-up saying "Are you sure want to delete this task?" will show when pressing the delete button(done).
 - When a task is done, the done button won't show.
 - Add a password.
 - When the archiving button is pressed, a pop-up will ask you for the password so you can archive the task.
