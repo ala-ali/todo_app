@@ -129,8 +129,7 @@ class TodoCubit extends Cubit<TodoStates> {
       print('Error updating task: $error');
     }
   }
-
-void deleteData(id){
+  void  deleteData(id){
     database.rawDelete(
         'DELETE FROM tasks WHERE id = ?',
       [id]
