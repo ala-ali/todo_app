@@ -16,11 +16,12 @@ class HomeLayout extends StatelessWidget {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  TimeOfDay parseTimeFromText(String timeText){
-        final parts = timeText.split(':');
-        final _hour = int.parse(parts[0]);
-        final _minute = int.parse(parts[1]);
-        return TimeOfDay( hour: _hour , minute: _minute);
+  TimeOfDay parseTimeFromText(String timeText) {
+    final parts = timeText.split(':');
+    final _hour = int.parse(parts[0]);
+    final _minute = int.parse(parts[1]);
+    print('====>>>>>>>$_hour , $_minute');
+    return TimeOfDay(hour: _hour, minute: _minute);
   }
 
   @override
@@ -48,6 +49,31 @@ class HomeLayout extends StatelessWidget {
                     onPressed: () {
                       if (isBottomSheetShown) {
                         if (formKey.currentState!.validate()) {
+                          final taskDate = DateTime.parse(dateController.text);
+                          final taskTime = parseTimeFromText(
+                            timeController.text,
+                          );
+                          print(
+                            '====>>>>>>>${taskDate.year}, ${DateTime.now().year} , ${taskDate.month} , ${DateTime.now().month} , ${taskDate.day} , ${DateTime.now().day} ',
+                          );
+                          if ((taskDate.year == DateTime.now().year) &&
+                              (taskDate.month == DateTime.now().month) &&
+                              (taskDate.day == DateTime.now().day) &&
+                              ((taskTime.hour < TimeOfDay.now().hour) ||
+                                  (taskTime.hour == TimeOfDay.now().hour &&
+                                      taskTime.minute <
+                                          TimeOfDay.now().minute))) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Can't select past dates."),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                                //  behavior: SnackBarBehavior
+                                //     .floating, // we can remove this line so that the snackbar will be at the bottom of the screen instead of floating
+                              ),
+                            );
+                            return;
+                          }
                           cubit.insertToDatabase(
                             title: titleController.text,
                             time: timeController.text,
@@ -131,9 +157,8 @@ class HomeLayout extends StatelessWidget {
                                             context: context,
                                             initialTime: TimeOfDay.now(),
                                           ).then((value) {
-                                            timeController.text = value!
-                                                .format(context)
-                                                .toString();
+                                            timeController.text =
+                                                '${value!.hour.toString().padLeft(2, '0')}:${value!.minute.toString().padLeft(2, '0')}';
                                           });
                                         },
                                       ), //time
@@ -179,8 +204,8 @@ class HomeLayout extends StatelessWidget {
                                               '21000-12-31',
                                             ),
                                           ).then((value) {
-                                            if (value != null){
-                                              if (value.isBefore(today)){
+                                            if (value != null) {
+                                              if (value.isBefore(today)) {
                                                 return;
                                               }
                                             }
@@ -198,18 +223,7 @@ class HomeLayout extends StatelessWidget {
                             )
                             .closed
                             .then((value) {
-                              final taskDate = DateTime.parse(dateController.text);
-                              final taskTime = parseTimeFromText(timeController.text);
-                              print('===========================================>>>>>>>>${taskDate.year }, ${DateTime.now().year} , ${taskDate.month} , ${DateTime.now().month} , ${taskDate.day} , ${DateTime.now().day} ');
-                           if((taskDate.year == DateTime.now().year)  && (taskDate.month == DateTime.now().month)  && (taskDate.day == DateTime.now().day)) {
-                             ScaffoldMessenger.of(context).showSnackBar(
-                                 SnackBar(content: Text("Can't select past dates."),
-                                     backgroundColor: Colors.red
-                                 )
-                             );
-                             return;
-                           }
-                           isBottomSheetShown = false;
+                              isBottomSheetShown = false;
                               cubit.changeIconToEdit();
                             });
 
