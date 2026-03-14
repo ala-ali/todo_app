@@ -88,13 +88,23 @@ Widget taskItem(Map task , context) =>
             final confirmed = await showOkCancelDialog(
               context: context,
               title: 'Confirm delete',
-              message: 'Are you sure you want to proceed?',
+              message: "Are you sure you want to delete this task?",
             );
             if (confirmed == true) {
               // User clicked OK - perform action
               print('Action confirmed');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                  "Task '${task['title']}' has been deleted."
+                  ),
+                  duration: Duration(seconds: 3),
+
+                )
+              );
               TodoCubit.get(context).deleteData(task['id']);
-            } else {
+            }
+            else {
               // User clicked Cancel or dismissed
               print('Action cancelled');
             }

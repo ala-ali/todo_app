@@ -24,15 +24,18 @@ New Task
 Done Task 
 
 ![6003479190583757906(1)](https://github.com/user-attachments/assets/922311ae-b809-4152-9754-7022e311a312)
-Our future updates:
-- Change app logo.
-- Add a Search Bar.
-- Time and Date inputs shouldn't be in past.
-- A notification should appear when task time comes.
-- A pop-up saying "Are you sure want to delete this task?" will show when pressing the delete button(done).
-- When a task is done, the done button won't show.
-- Add a password.
-- When the archiving button is pressed, a pop-up will ask you for the password so you can archive the task.
-- If a task is archived, the archive button will turn into unarchive, and when it is pressed, it reads the previous status before it was archived,  and turns into it(e.g: if you archive a new task, then unarchive it, it turns new, not done).
 
+## Our future updates will be:
+#### - Change app logo.
+#### - Add a Search Bar.
+#### - Time and Date inputs shouldn't be in past.
+#### - Time and Date inputs shouldn't be text-editable.
+#### - A notification should appear when task time comes.
+#### - A pop-up saying "Are you sure want to delete this task?" will show when pressing the delete button(done).
+#### - When a task is done, the done button won't show.
+#### - Add a password.
+#### - When the archiving button is pressed, a pop-up will ask you for the password so you can archive the task.
+#### - If a task is archived, the archive button will turn into unarchive, and when it is pressed, it reads the previous status before it was archived,  and turns into it(e.g: if you archive a new task, then unarchive it, it turns new, not done).
+#### -Add settings.
+#### -Add date and time forms in settings.
 

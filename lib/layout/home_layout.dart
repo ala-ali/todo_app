@@ -16,6 +16,12 @@ class HomeLayout extends StatelessWidget {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  TimeOfDay parseTimeFromText(String timeText){
+        final parts = timeText.split(':');
+        final _hour = int.parse(parts[0]);
+        final _minute = int.parse(parts[1]);
+        return TimeOfDay( hour: _hour , minute: _minute);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,14 +166,24 @@ class HomeLayout extends StatelessWidget {
                                           return null;
                                         },
                                         onTap: () {
+                                          final today = DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day,
+                                          );
                                           showDatePicker(
                                             context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime.now(),
+                                            initialDate: today,
+                                            firstDate: today,
                                             lastDate: DateTime.parse(
-                                              '2031-12-31',
+                                              '21000-12-31',
                                             ),
                                           ).then((value) {
+                                            if (value != null){
+                                              if (value.isBefore(today)){
+                                                return;
+                                              }
+                                            }
                                             dateController.text = value!
                                                 .toString()
                                                 .substring(0, 10);
@@ -182,8 +198,18 @@ class HomeLayout extends StatelessWidget {
                             )
                             .closed
                             .then((value) {
-                              isBottomSheetShown = false;
-
+                              final taskDate = DateTime.parse(dateController.text);
+                              final taskTime = parseTimeFromText(timeController.text);
+                              print('===========================================>>>>>>>>${taskDate.year }, ${DateTime.now().year} , ${taskDate.month} , ${DateTime.now().month} , ${taskDate.day} , ${DateTime.now().day} ');
+                           if((taskDate.year == DateTime.now().year)  && (taskDate.month == DateTime.now().month)  && (taskDate.day == DateTime.now().day)) {
+                             ScaffoldMessenger.of(context).showSnackBar(
+                                 SnackBar(content: Text("Can't select past dates."),
+                                     backgroundColor: Colors.red
+                                 )
+                             );
+                             return;
+                           }
+                           isBottomSheetShown = false;
                               cubit.changeIconToEdit();
                             });
 
